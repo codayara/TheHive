@@ -6,34 +6,38 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.mayarafelix.thehive.ItemClickListener;
+import com.mayarafelix.thehive.ItemClickOptions;
 import com.mayarafelix.thehive.R;
 
 /**
  * Created by mayca on 10/8/2018.
  */
 
-public class ItemViewHolder extends RecyclerView.ViewHolder{
+public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     private TextView nameView;
     private TextView quantityView;
     private ImageButton addBtn;
     private ImageButton removeBtn;
 
-    public ItemViewHolder(View itemView, TextView nameView, TextView quantityView, ImageButton addBtn, ImageButton removeBtn) {
-        super(itemView);
-        this.nameView = nameView;
-        this.quantityView = quantityView;
-        this.addBtn = addBtn;
-        this.removeBtn = removeBtn;
-    }
+    private ItemClickListener listener;
 
-    public ItemViewHolder(View view)
+    public ItemViewHolder(View view, ItemClickListener listener)
     {
         super(view);
         nameView = view.findViewById(R.id.name);
         quantityView = view.findViewById(R.id.quantity);
         addBtn = view.findViewById(R.id.addButton);
         removeBtn = view.findViewById(R.id.removeButton);
+
+        this.listener  = listener;
+        setupClickListener();
+    }
+
+    private void setupClickListener() {
+        addBtn.setOnClickListener(this);
+        removeBtn.setOnClickListener(this);
     }
 
     public TextView getNameView() {
@@ -66,5 +70,15 @@ public class ItemViewHolder extends RecyclerView.ViewHolder{
 
     public void setRemoveBtn(ImageButton removeBtn) {
         this.removeBtn = removeBtn;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.addButton) {
+            listener.onClick(view, getAdapterPosition(), ItemClickOptions.ADD.getCode());
+        }
+        else {
+            listener.onClick(view, getAdapterPosition(), ItemClickOptions.REMOVE.getCode());
+        }
     }
 }
