@@ -15,8 +15,15 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.mayarafelix.thehive.adapters.ItemAdapter;
+import com.mayarafelix.thehive.models.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private List<Item> items;
+    private ItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setupItems();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -34,16 +42,17 @@ public class MainActivity extends AppCompatActivity {
 
         ItemClickListener listener = new ItemClickListener() {
             @Override
-            public void onClick(View view, int position, int option) {
-                String optionDescription = ItemClickOptions.getName(option);
-
-
-                Toast.makeText(getApplicationContext(), "Position " + position + " Option: " + optionDescription, Toast.LENGTH_SHORT).show();
+            public void onClick(View view, View quantityView, int position, int option) {
+                adapter.updateData(option, position, quantityView);
+//                String optionDescription = ItemClickOptions.getName(option);
+//                Toast.makeText(getApplicationContext(), "Position " + position + " Option: " + optionDescription, Toast.LENGTH_SHORT).show();
             }
         };
 
-        ItemAdapter adapter = new ItemAdapter(listener);
+        adapter = new ItemAdapter(listener);
         recyclerView.setAdapter(adapter);
+
+        adapter.updateData(items);
 
         // Floating action button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -54,6 +63,32 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void setupItems() {
+
+        items = new ArrayList<>();
+
+        Item item1 = new Item();
+        item1.setName("Papel Higienico");
+        item1.setQuantity(1);
+
+        Item item2 = new Item();
+        item2.setName("Fio Dental");
+        item2.setQuantity(0);
+
+        Item item3 = new Item();
+        item3.setName("Suco");
+        item3.setQuantity(3);
+
+        Item item4 = new Item();
+        item4.setName("Refrigerante");
+        item4.setQuantity(5);
+
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+        items.add(item4);
     }
 
     @Override

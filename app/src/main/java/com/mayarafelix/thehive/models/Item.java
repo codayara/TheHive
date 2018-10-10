@@ -7,7 +7,7 @@ package com.mayarafelix.thehive.models;
 public class Item {
 
     private String name;
-    private String quantity;
+    private int quantity;
 
     public String getName() {
         return name;
@@ -17,11 +17,25 @@ public class Item {
         this.name = name;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public String getQuantityDescription() {
+        return Integer.toString(quantity);
+    }
+
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public void increaseQuantity() {
+        this.quantity++;
+    }
+
+    public void decreaseQuantity() {
+        if (quantity > 0) {
+            this.quantity--;
+        }
     }
 }

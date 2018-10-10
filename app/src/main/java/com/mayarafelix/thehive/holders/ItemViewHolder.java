@@ -75,10 +75,10 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.addButton) {
-            listener.onClick(view, getAdapterPosition(), ItemClickOptions.ADD.getCode());
+            listener.onClick(view, quantityView, getAdapterPosition(), ItemClickOptions.ADD.getCode());
         }
         else {
-            listener.onClick(view, getAdapterPosition(), ItemClickOptions.REMOVE.getCode());
+            listener.onClick(view, quantityView, getAdapterPosition(), ItemClickOptions.REMOVE.getCode());
         }
     }
 }

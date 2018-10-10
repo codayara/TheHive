@@ -7,6 +7,6 @@ import android.view.View;
  */
 
 public interface ItemClickListener {
-    void onClick(View view, int position, int option);
+    void onClick(View view, View quantityView, int position, int option);
 }
 
